@@ -1,10 +1,18 @@
 import "./CharacterSelection.css";
 
-const CharacterSelection = ({ location, size, visible }) => {
-  const xPos = location.x - size / 2;
-  const yPos = location.y - size / 2;
+const CharacterSelection = ({
+  location,
+  targetingSquareSize,
+  visible,
+  characters,
+}) => {
+  const xPos = location.x - targetingSquareSize / 2;
+  const yPos = location.y - targetingSquareSize / 2;
 
   const display = visible ? "flex" : "none";
+  const charList = characters.map((char) => {
+    return <button key={char}>{char}</button>;
+  });
   return (
     <div
       className="char-selection"
@@ -12,12 +20,9 @@ const CharacterSelection = ({ location, size, visible }) => {
     >
       <div
         className="targeting-square"
-        style={{
-          width: size,
-          height: size,
-        }}
+        style={{ width: targetingSquareSize, height: targetingSquareSize }}
       ></div>
-      <div className="char-list"></div>
+      <div className="char-list">{charList}</div>
     </div>
   );
 };

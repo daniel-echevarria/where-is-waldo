@@ -4,21 +4,23 @@ import wallyImg from "./assets/wally.jpg";
 import CharacterSelection from "./components/CharacterSelection";
 
 function App() {
-  const size = 30;
+  const targetingSquareSize = 30;
+  const characters = ["wally", "running-shoes"];
   const [visible, setVisible] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
   const handleClick = (e) => {
     setCoordinates({ x: e.clientX, y: e.clientY });
-    setVisible(true);
+    setVisible(visible ? false : true);
   };
 
   return (
     <>
       <CharacterSelection
         location={coordinates}
-        size={size}
+        targetingSquareSize={targetingSquareSize}
         visible={visible}
+        characters={characters}
       />
       <img onClick={handleClick} src={wallyImg}></img>
     </>
