@@ -4,6 +4,7 @@ import wallyImg from "./assets/wally.jpg";
 import CharacterSelection from "./components/CharacterSelection";
 
 function App() {
+  const size = 30;
   const [visible, setVisible] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
@@ -14,8 +15,12 @@ function App() {
 
   return (
     <>
+      <CharacterSelection
+        location={coordinates}
+        size={size}
+        visible={visible}
+      />
       <img onClick={handleClick} src={wallyImg}></img>
-      <CharacterSelection location={coordinates} size={30} visible={visible} />
     </>
   );
 }
