@@ -9,9 +9,16 @@ function App() {
   const [visible, setVisible] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
+  const getCoordinates = async () => {
+    const coordinates = await fetch("http://localhost:3000/personages");
+    const someAnswer = await coordinates.json();
+    console.log(someAnswer);
+  };
+
   const handleClick = (e) => {
     setCoordinates({ x: e.clientX, y: e.clientY });
     setVisible(visible ? false : true);
+    getCoordinates();
   };
 
   return (
