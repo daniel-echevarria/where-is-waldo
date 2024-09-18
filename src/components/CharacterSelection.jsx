@@ -1,13 +1,19 @@
 import "./CharacterSelection.css";
 import _ from "lodash";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const CharacterSelection = ({
-  clickCoordinates,
-  visible,
-  characters,
-  relativeCoord,
-}) => {
+const CharacterSelection = ({ clickCoordinates, visible, relativeCoord }) => {
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(() => {
+    const getCharacters = async () => {
+      const response = await fetch("http://localhost:3000/personages");
+      const charactersObjects = await response.json();
+      setCharacters(charactersObjects);
+    };
+    getCharacters();
+  }, []);
+
   const circleDiameter = 30;
   const circleRadius = circleDiameter / 2;
   const xPos = clickCoordinates.x - circleRadius - 2;
@@ -24,8 +30,8 @@ const CharacterSelection = ({
 
   const charIsInCircle = (relativeCoord, char) => {
     return (
-      isInTargetRange(relativeCoord.x, char.xCoordinate, circleRadius) &&
-      isInTargetRange(relativeCoord.y, char.yCoordinate, circleRadius)
+      isInTargetRange(relativeCoord.x, char.x, circleRadius) &&
+      isInTargetRange(relativeCoord.y, char.y, circleRadius)
     );
   };
 
