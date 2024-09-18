@@ -1,30 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import wallyImg from "./assets/wally.jpg";
 import CharacterSelection from "./components/CharacterSelection";
 
 function App() {
   const targetingSquareSize = 30;
-  const characters = ["wally", "running-shoes"];
+  const [characters, setCharacters] = useState([]);
   const [visible, setVisible] = useState(false);
   const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
 
-  const getPersonages = async () => {
-    const response = await fetch("http://localhost:3000/personages");
-    const personages = await response.json();
-  };
+  useEffect(() => {
+    const getPersonages = async () => {
+      const response = await fetch("http://localhost:3000/personages");
+      const personages = await response.json();
+      const charactersNames = personages.map((perso) => perso.name);
+      setCharacters(charactersNames);
+    };
+    getPersonages(), [];
+  });
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
-    const x = e.clientX - rect.x;
-    const y = e.clientY - rect.y;
-    const inImgCoordinates = { x: x, y: y };
+    const inImgX = e.clientX - rect.x;
+    const inImgY = e.clientY - rect.y;
+    const inImgCoordinates = { x: inImgX, y: inImgY };
     const clientCoordinates = { x: e.clientX, y: e.clientY };
-    console.log(rect);
-    console.log(inImgCoordinates);
     setClickCoordinates(clientCoordinates);
     setVisible(visible ? false : true);
-    getPersonages();
+    console.log(rect);
+    console.log(inImgCoordinates);
+    console.log(characters);
   };
 
   return (

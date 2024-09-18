@@ -13,6 +13,7 @@ const CharacterSelection = ({
   const charList = characters.map((char) => {
     return <button key={char}>{char}</button>;
   });
+
   return (
     <div
       className="char-selection"
