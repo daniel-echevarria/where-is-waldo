@@ -10,13 +10,12 @@ function App() {
   const [relativeCoord, setRelativeCoord] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const getPersonages = async () => {
+    const getCharacters = async () => {
       const response = await fetch("http://localhost:3000/personages");
-      const personages = await response.json();
-      const charactersNames = personages.map((perso) => perso.name);
-      setCharacters(charactersNames);
+      const Characters = await response.json();
+      setCharacters(Characters);
     };
-    getPersonages(), [];
+    getCharacters(), [];
   });
 
   const handleClick = (e) => {

@@ -13,29 +13,31 @@ const CharacterSelection = ({
   const xPos = clickCoordinates.x - circleRadius - 2;
   const yPos = clickCoordinates.y - circleRadius - 2;
   const display = visible ? "flex" : "none";
+  const charactersNames = characters.map((char) => char.name);
 
-  const handleCharacterSelection = (e) => {
-    const getSelectCharCoordinates = async () => {
-      const response = await fetch("http://localhost:3000/personages");
-      const personages = await response.json();
-      const char = personages.find((perso) => perso.name === e.target.value);
-      const answerIsCorrect =
-        isInTargetRange(relativeCoord.x, char.xCoordinate) &&
-        isInTargetRange(relativeCoord.y, char.yCoordinate);
-      console.log(answerIsCorrect);
-    };
-    getSelectCharCoordinates();
-  };
-
-  const isInTargetRange = (value, target) => {
-    const lowerRange = target - circleRadius;
-    const upperRange = target + circleRadius;
+  const isInTargetRange = (value, target, errorMargin) => {
+    const lowerRange = target - errorMargin;
+    const upperRange = target + errorMargin;
     const range = _.range(lowerRange, upperRange);
-    console.log(range);
     return range.includes(value);
   };
 
-  const charList = characters.map((char) => {
+  const charIsInCircle = (relativeCoord, char) => {
+    return (
+      isInTargetRange(relativeCoord.x, char.xCoordinate, circleRadius) &&
+      isInTargetRange(relativeCoord.y, char.yCoordinate, circleRadius)
+    );
+  };
+
+  const handleCharacterSelection = (e) => {
+    const selectedChar = characters.find(
+      (char) => char.name === e.target.value
+    );
+    const nailedIt = charIsInCircle(relativeCoord, selectedChar);
+    console.log(nailedIt);
+  };
+
+  const charList = charactersNames.map((char) => {
     return (
       <button key={char} value={char} onClick={handleCharacterSelection}>
         {char}
