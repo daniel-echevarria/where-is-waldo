@@ -4,10 +4,10 @@ import wallyImg from "./assets/wally.jpg";
 import CharacterSelection from "./components/CharacterSelection";
 
 function App() {
-  const targetingSquareSize = 30;
   const [characters, setCharacters] = useState([]);
   const [visible, setVisible] = useState(false);
   const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
+  const [relativeCoord, setRelativeCoord] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const getPersonages = async () => {
@@ -26,17 +26,15 @@ function App() {
     const inImgCoordinates = { x: inImgX, y: inImgY };
     const clientCoordinates = { x: e.clientX, y: e.clientY };
     setClickCoordinates(clientCoordinates);
+    setRelativeCoord(inImgCoordinates);
     setVisible(visible ? false : true);
-    console.log(rect);
-    console.log(inImgCoordinates);
-    console.log(characters);
   };
 
   return (
     <>
       <CharacterSelection
-        location={clickCoordinates}
-        targetingSquareSize={targetingSquareSize}
+        clickCoordinates={clickCoordinates}
+        relativeCoord={relativeCoord}
         visible={visible}
         characters={characters}
       />
