@@ -6,9 +6,10 @@
 .char-list {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  /* border: 2px solid black; */
-  background-color: wheat;
+  padding: 2px;
+  gap: 2px;
+  /* border: 2px solid white; */
+  /* background-color: wheat; */
 }
 
 .char-selection {

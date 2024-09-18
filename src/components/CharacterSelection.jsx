@@ -6,8 +6,8 @@ const CharacterSelection = ({
   visible,
   characters,
 }) => {
-  const xPos = location.x - targetingSquareSize / 2;
-  const yPos = location.y - targetingSquareSize / 2;
+  const xPos = location.x - targetingSquareSize / 2 - 2;
+  const yPos = location.y - targetingSquareSize / 2 - 2;
 
   const display = visible ? "flex" : "none";
   const charList = characters.map((char) => {
