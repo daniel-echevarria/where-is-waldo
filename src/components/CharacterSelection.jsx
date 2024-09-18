@@ -19,6 +19,7 @@ const CharacterSelection = ({ clickCoordinates, visible, relativeCoord }) => {
   const xPos = clickCoordinates.x - circleRadius - 2;
   const yPos = clickCoordinates.y - circleRadius - 2;
   const display = visible ? "flex" : "none";
+
   const charactersNames = characters.map((char) => char.name);
 
   const isInTargetRange = (value, target, errorMargin) => {
@@ -40,7 +41,7 @@ const CharacterSelection = ({ clickCoordinates, visible, relativeCoord }) => {
       (char) => char.name === e.target.value
     );
     const nailedIt = charIsInCircle(relativeCoord, selectedChar);
-    console.log(nailedIt);
+    e.target.className = nailedIt ? "correct" : "wrong";
   };
 
   const charList = charactersNames.map((char) => {
