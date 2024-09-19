@@ -7,6 +7,7 @@ const CharacterSelection = ({
   visible,
   relativeCoord,
   setAnswer,
+  placeMarker,
 }) => {
   const [characters, setCharacters] = useState([]);
 
@@ -44,6 +45,7 @@ const CharacterSelection = ({
       (char) => char.name === e.target.value
     );
     const nailedIt = charIsInCircle(relativeCoord, selectedChar);
+    nailedIt && placeMarker(xPos, yPos);
     setAnswer(nailedIt ? "correct" : "wrong");
   };
 

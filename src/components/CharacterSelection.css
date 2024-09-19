@@ -25,6 +25,10 @@
   position: absolute;
 }
 
+.marker {
+  position: absolute;
+}
+
 .correct {
   animation: correct 2s ease-in 0s forwards;
 }
