@@ -9,6 +9,21 @@ function App() {
   const [relativeCoord, setRelativeCoord] = useState({ x: 0, y: 0 });
   const [markers, setMarkers] = useState([]);
   const [answer, setAnswer] = useState(null);
+  const [characters, setCharacters] = useState([]);
+  const [gameOver, setGameOver] = useState(false);
+
+  useEffect(() => {
+    const getCharacters = async () => {
+      const response = await fetch("http://localhost:3000/personages");
+      const charactersObjects = await response.json();
+      setCharacters(charactersObjects);
+    };
+    getCharacters();
+  }, []);
+
+  useEffect(() => {
+    markers.length === characters.length && setGameOver(true);
+  }, [markers.length, characters.length]);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -61,6 +76,7 @@ function App() {
         visible={visible}
         setAnswer={setAnswer}
         placeMarker={placeMarker}
+        characters={characters}
       />
       <img onClick={handleClick} src={wallyImg}></img>
       <div className="markers">{markerList}</div>

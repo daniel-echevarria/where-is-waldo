@@ -8,18 +8,8 @@ const CharacterSelection = ({
   relativeCoord,
   setAnswer,
   placeMarker,
+  characters,
 }) => {
-  const [characters, setCharacters] = useState([]);
-
-  useEffect(() => {
-    const getCharacters = async () => {
-      const response = await fetch("http://localhost:3000/personages");
-      const charactersObjects = await response.json();
-      setCharacters(charactersObjects);
-    };
-    getCharacters();
-  }, []);
-
   useEffect(() => {
     const createScore = async () => {
       const scoreData = { name: "Player1" };
@@ -29,11 +19,11 @@ const CharacterSelection = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(scoreData), // Send the score data as JSON
+        body: JSON.stringify(scoreData),
       });
 
       const result = await response.json();
-      console.log(result); // Output the response
+      console.log(result);
     };
 
     createScore();
