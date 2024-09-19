@@ -34,6 +34,8 @@ const CharacterSelection = ({
   };
 
   const charIsInCircle = (relativeCoord, char) => {
+    console.log(relativeCoord);
+    console.log(char);
     return (
       isInTargetRange(relativeCoord.x, char.x, circleRadius) &&
       isInTargetRange(relativeCoord.y, char.y, circleRadius)
@@ -45,7 +47,7 @@ const CharacterSelection = ({
       (char) => char.name === e.target.value
     );
     const nailedIt = charIsInCircle(relativeCoord, selectedChar);
-    nailedIt && placeMarker(xPos, yPos);
+    nailedIt && placeMarker({ name: e.target.value, x: xPos, y: yPos });
     setAnswer(nailedIt ? "correct" : "wrong");
   };
 

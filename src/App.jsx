@@ -30,23 +30,24 @@ function App() {
 
   const markerList = markers.map((marker) => {
     return (
-      <span
-        className="marker"
+      <div
         key={marker.name}
+        className="marker"
         style={{ top: marker.y, left: marker.x }}
       >
-        {"❌️"}
-      </span>
+        <span>{"❎"}</span>
+        <span className="marker-name">{marker.name}</span>
+      </div>
     );
   });
 
-  const placeMarker = (xPos, yPos) => {
+  const placeMarker = (marker) => {
     setMarkers([
       ...markers,
       {
-        name: "peak",
-        x: xPos,
-        y: yPos,
+        name: marker.name,
+        x: marker.x,
+        y: marker.y,
       },
     ]);
   };

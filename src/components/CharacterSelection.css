@@ -26,7 +26,18 @@
 }
 
 .marker {
+  display: flex;
+  gap: 5px;
+  font-size: 26px;
   position: absolute;
+}
+
+.marker-name {
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 18px;
+  color: white;
+  background-color: forestgreen;
 }
 
 .correct {
