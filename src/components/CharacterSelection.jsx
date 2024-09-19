@@ -20,6 +20,25 @@ const CharacterSelection = ({
     getCharacters();
   }, []);
 
+  useEffect(() => {
+    const createScore = async () => {
+      const scoreData = { name: "Player1" };
+
+      const response = await fetch("http://localhost:3000/scores", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(scoreData), // Send the score data as JSON
+      });
+
+      const result = await response.json();
+      console.log(result); // Output the response
+    };
+
+    createScore();
+  }, []);
+
   const circleDiameter = 30;
   const circleRadius = circleDiameter / 2;
   const xPos = clickCoordinates.x - circleRadius - 2;
