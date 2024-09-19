@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import wallyImg from "./assets/wally.jpg";
 import CharacterSelection from "./components/CharacterSelection";
+import { differenceInSeconds } from "date-fns";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -11,6 +12,7 @@ function App() {
   const [answer, setAnswer] = useState(null);
   const [characters, setCharacters] = useState([]);
   const [gameOver, setGameOver] = useState(false);
+  const [scores, setScores] = useState([]);
 
   useEffect(() => {
     const getCharacters = async () => {
@@ -22,8 +24,21 @@ function App() {
   }, []);
 
   useEffect(() => {
-    markers.length === characters.length && setGameOver(true);
+    markers.length === characters.length &&
+      markers.length > 0 &&
+      setGameOver(true);
   }, [markers.length, characters.length]);
+
+  useEffect(() => {
+    const getScore = async () => {
+      const response = await fetch("http://localhost:3000/scores/100");
+      const result = await response.json();
+      const startTime = new Date(result.created_at);
+      const now = new Date();
+      console.log(differenceInSeconds(now, startTime));
+    };
+    getScore();
+  }, [gameOver]);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -77,7 +92,9 @@ function App() {
         setAnswer={setAnswer}
         placeMarker={placeMarker}
         characters={characters}
+        gameOver={gameOver}
       />
+      <div>{gameOver ? "gameisover" : "gamison"}</div>
       <img onClick={handleClick} src={wallyImg}></img>
       <div className="markers">{markerList}</div>
     </>
