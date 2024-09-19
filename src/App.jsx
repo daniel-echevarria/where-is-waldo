@@ -22,7 +22,7 @@ function App() {
   };
 
   const Answer = () => {
-    return <div className={answer}>{answer === "correct" ? "✔️" : "❌"}</div>;
+    return <div className={answer}>{answer === "correct" ? "✅" : "❌"}</div>;
   };
 
   const answerBox = answer && visible ? <Answer /> : "";

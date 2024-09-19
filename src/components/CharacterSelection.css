@@ -20,7 +20,8 @@
 }
 
 .answer-box {
-  background-color: white;
+  padding: 30px;
+  font-size: 124px;
   position: absolute;
 }
 
@@ -29,7 +30,7 @@
 }
 
 .wrong {
-  animation: wrong 0.1s ease-in-out 0s 3;
+  animation: wrong 0.1s ease-in-out 0s 3 forwards;
 }
 
 @keyframes wrong {
@@ -43,7 +44,6 @@
     transform: rotate((20deg));
   }
   to {
-    color: red;
     transform: rotate(0deg);
   }
 }
@@ -53,8 +53,7 @@
     transform: rotate(0deg);
   }
   to {
-    background-color: green;
-    color: white;
+    color: green;
     transform: rotate(360deg);
   }
 }
