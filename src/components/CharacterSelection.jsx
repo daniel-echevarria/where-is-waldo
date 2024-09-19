@@ -2,7 +2,12 @@ import "./CharacterSelection.css";
 import _ from "lodash";
 import { useState, useEffect } from "react";
 
-const CharacterSelection = ({ clickCoordinates, visible, relativeCoord }) => {
+const CharacterSelection = ({
+  clickCoordinates,
+  visible,
+  relativeCoord,
+  setAnswer,
+}) => {
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
@@ -19,8 +24,6 @@ const CharacterSelection = ({ clickCoordinates, visible, relativeCoord }) => {
   const xPos = clickCoordinates.x - circleRadius - 2;
   const yPos = clickCoordinates.y - circleRadius - 2;
   const display = visible ? "flex" : "none";
-
-  const charactersNames = characters.map((char) => char.name);
 
   const isInTargetRange = (value, target, errorMargin) => {
     const lowerRange = target - errorMargin;
@@ -41,13 +44,17 @@ const CharacterSelection = ({ clickCoordinates, visible, relativeCoord }) => {
       (char) => char.name === e.target.value
     );
     const nailedIt = charIsInCircle(relativeCoord, selectedChar);
-    e.target.className = nailedIt ? "correct" : "wrong";
+    setAnswer(nailedIt ? "correct" : "wrong");
   };
 
-  const charList = charactersNames.map((char) => {
+  const charList = characters.map((char) => {
     return (
-      <button key={char} value={char} onClick={handleCharacterSelection}>
-        {char}
+      <button
+        key={char.name}
+        value={char.name}
+        onClick={handleCharacterSelection}
+      >
+        {char.name}
       </button>
     );
   });

@@ -19,12 +19,17 @@
   /* border: 1px solid pink; */
 }
 
+.answer-box {
+  background-color: white;
+  position: absolute;
+}
+
 .correct {
   animation: correct 2s ease-in 0s forwards;
 }
 
 .wrong {
-  animation: wrong 0.1s ease-in-out 0s 3 forwards;
+  animation: wrong 0.1s ease-in-out 0s 3;
 }
 
 @keyframes wrong {
