@@ -15,6 +15,7 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [scoreId, setScoreId] = useState(null);
   const [name, setName] = useState(null);
+  const [time, setTime] = useState(null);
 
   // Get Characters from Backend
   useEffect(() => {
@@ -62,8 +63,7 @@ function App() {
       const result = await response.json();
       const startTime = new Date(result.created_at);
       const now = new Date();
-      console.log(differenceInSeconds(now, startTime));
-      // setIsOpen(true);
+      setTime(differenceInSeconds(now, startTime));
     };
     getScore(scoreId);
   }, [gameOver, scoreId]);
@@ -123,7 +123,7 @@ function App() {
         gameOver={gameOver}
         setScoreId={setScoreId}
       />
-      <NameInputModal isOpen={gameOver} setName={setName} />
+      <NameInputModal isOpen={gameOver} setName={setName} time={time} />
       <img onClick={handleClick} src={wallyImg}></img>
       <div className="markers">{markerList}</div>
     </main>

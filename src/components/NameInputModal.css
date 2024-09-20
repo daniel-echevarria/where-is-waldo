@@ -14,7 +14,7 @@
 .modal span {
   font-size: large;
   font-family: monospace;
-  max-width: 60%;
+  margin: 0px 20px;
 }
 
 .modal label {
