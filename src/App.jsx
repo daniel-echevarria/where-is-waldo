@@ -14,7 +14,7 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [scoreId, setScoreId] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState(null);
 
   // Get Characters from Backend
   useEffect(() => {
@@ -33,6 +33,25 @@ function App() {
       setGameOver(true);
   }, [markers.length, characters.length]);
 
+  // Update Player Name
+  useEffect(() => {
+    const updatePlayerName = async (id, name) => {
+      if (!name) {
+        return;
+      }
+      const response = await fetch(`http://localhost:3000/scores/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      });
+      const result = await response.json();
+      console.log(result);
+    };
+    updatePlayerName(scoreId, name);
+  }, [scoreId, name]);
+
   // Get the score (time) of the last player
   useEffect(() => {
     const getScore = async (id) => {
@@ -44,7 +63,7 @@ function App() {
       const startTime = new Date(result.created_at);
       const now = new Date();
       console.log(differenceInSeconds(now, startTime));
-      setIsOpen(true);
+      // setIsOpen(true);
     };
     getScore(scoreId);
   }, [gameOver, scoreId]);
@@ -92,7 +111,7 @@ function App() {
   };
 
   return (
-    <>
+    <main>
       <div className="answer-box">{answerBox}</div>
       <CharacterSelection
         clickCoordinates={clickCoordinates}
@@ -104,10 +123,10 @@ function App() {
         gameOver={gameOver}
         setScoreId={setScoreId}
       />
-      <NameInputModal isOpen={isOpen} />
+      <NameInputModal isOpen={gameOver} setName={setName} />
       <img onClick={handleClick} src={wallyImg}></img>
       <div className="markers">{markerList}</div>
-    </>
+    </main>
   );
 }
 

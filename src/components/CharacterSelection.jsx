@@ -14,7 +14,6 @@ const CharacterSelection = ({
   useEffect(() => {
     const createScore = async () => {
       const scoreData = { name: "Player1" };
-
       const response = await fetch("http://localhost:3000/scores", {
         method: "POST",
         headers: {
