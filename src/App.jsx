@@ -15,7 +15,7 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [scoreId, setScoreId] = useState(null);
   const [name, setName] = useState(null);
-  const [time, setTime] = useState(null);
+  const [timeScore, setTimeScore] = useState(null);
 
   // Get Characters from Backend
   useEffect(() => {
@@ -29,44 +29,41 @@ function App() {
 
   // Check for game over
   useEffect(() => {
-    markers.length === characters.length &&
-      markers.length > 0 &&
+    markers.length > 0 &&
+      markers.length === characters.length &&
       setGameOver(true);
   }, [markers.length, characters.length]);
 
-  // Update Player Name
+  // Get the score (time) of the last player
   useEffect(() => {
-    const updatePlayerName = async (id, name) => {
-      if (!name) {
-        return;
-      }
-      const response = await fetch(`http://localhost:3000/scores/${id}`, {
+    if (!gameOver) return;
+    const getScore = async () => {
+      const response = await fetch(`http://localhost:3000/scores/${scoreId}`);
+      const result = await response.json();
+      const startTime = new Date(result.created_at);
+      const now = new Date();
+      setTimeScore(differenceInSeconds(now, startTime));
+    };
+    getScore();
+  }, [gameOver, scoreId]);
+
+  // Update The Score Record with the proper info
+  useEffect(() => {
+    if (!name) return;
+    const updatePlayerName = async () => {
+      const response = await fetch(`http://localhost:3000/scores/${scoreId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name }),
+
+        body: JSON.stringify({ name, time_score: timeScore }),
       });
       const result = await response.json();
       console.log(result);
     };
-    updatePlayerName(scoreId, name);
-  }, [scoreId, name]);
-
-  // Get the score (time) of the last player
-  useEffect(() => {
-    const getScore = async (id) => {
-      if (!gameOver) {
-        return;
-      }
-      const response = await fetch(`http://localhost:3000/scores/${id}`);
-      const result = await response.json();
-      const startTime = new Date(result.created_at);
-      const now = new Date();
-      setTime(differenceInSeconds(now, startTime));
-    };
-    getScore(scoreId);
-  }, [gameOver, scoreId]);
+    updatePlayerName();
+  }, [scoreId, name, timeScore]);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -123,7 +120,11 @@ function App() {
         gameOver={gameOver}
         setScoreId={setScoreId}
       />
-      <NameInputModal isOpen={gameOver} setName={setName} time={time} />
+      <NameInputModal
+        isOpen={gameOver}
+        setName={setName}
+        timeScore={timeScore}
+      />
       <img onClick={handleClick} src={wallyImg}></img>
       <div className="markers">{markerList}</div>
     </main>
