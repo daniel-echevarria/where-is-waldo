@@ -9,6 +9,7 @@ const CharacterSelection = ({
   setAnswer,
   placeMarker,
   characters,
+  setScoreId,
 }) => {
   useEffect(() => {
     const createScore = async () => {
@@ -23,11 +24,11 @@ const CharacterSelection = ({
       });
 
       const result = await response.json();
-      console.log(result);
+      setScoreId(result.id);
     };
 
     createScore();
-  }, []);
+  }, [setScoreId]);
 
   const circleDiameter = 30;
   const circleRadius = circleDiameter / 2;
@@ -43,8 +44,6 @@ const CharacterSelection = ({
   };
 
   const charIsInCircle = (relativeCoord, char) => {
-    console.log(relativeCoord);
-    console.log(char);
     return (
       isInTargetRange(relativeCoord.x, char.x, circleRadius) &&
       isInTargetRange(relativeCoord.y, char.y, circleRadius)

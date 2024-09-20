@@ -12,7 +12,7 @@ function App() {
   const [answer, setAnswer] = useState(null);
   const [characters, setCharacters] = useState([]);
   const [gameOver, setGameOver] = useState(false);
-  const [scores, setScores] = useState([]);
+  const [scoreId, setScoreId] = useState(null);
 
   useEffect(() => {
     const getCharacters = async () => {
@@ -30,15 +30,15 @@ function App() {
   }, [markers.length, characters.length]);
 
   useEffect(() => {
-    const getScore = async () => {
-      const response = await fetch("http://localhost:3000/scores/100");
+    const getScore = async (id) => {
+      const response = await fetch(`http://localhost:3000/scores/${id}`);
       const result = await response.json();
       const startTime = new Date(result.created_at);
       const now = new Date();
       console.log(differenceInSeconds(now, startTime));
     };
-    getScore();
-  }, [gameOver]);
+    getScore(scoreId);
+  }, [gameOver, scoreId]);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -93,6 +93,7 @@ function App() {
         placeMarker={placeMarker}
         characters={characters}
         gameOver={gameOver}
+        setScoreId={setScoreId}
       />
       <div>{gameOver ? "gameisover" : "gamison"}</div>
       <img onClick={handleClick} src={wallyImg}></img>
