@@ -47,7 +47,7 @@ function App() {
     getScore();
   }, [gameOver, scoreId]);
 
-  // Update The Score Record with the proper info
+  // Update The Score Record with the name and score
   useEffect(() => {
     if (!name) return;
     const updatePlayerName = async () => {

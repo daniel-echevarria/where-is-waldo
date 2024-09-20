@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CustomInput from "./CustomInput";
 import "./NameInputModal.css";
+import Podium from "./Podium";
 
 const NameInputModal = ({ isOpen, setName, timeScore }) => {
   const [value, setValue] = useState("");
@@ -17,6 +18,7 @@ const NameInputModal = ({ isOpen, setName, timeScore }) => {
       {isOpen && (
         <div className="modal">
           <span>You found all the characters in {timeScore} seconds! </span>
+          <Podium />
           <span>
             Congrats you are among the top 3 quickest waldo finders! <br /> You
             may input your name for the grand podium!
