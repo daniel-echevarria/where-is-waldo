@@ -3,6 +3,7 @@ import "./App.css";
 import wallyImg from "./assets/wally.jpg";
 import CharacterSelection from "./components/CharacterSelection";
 import { differenceInSeconds } from "date-fns";
+import NameInputModal from "./components/NameInputModal";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -13,7 +14,9 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [scoreId, setScoreId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
+  // Get Characters from Backend
   useEffect(() => {
     const getCharacters = async () => {
       const response = await fetch("http://localhost:3000/personages");
@@ -23,19 +26,25 @@ function App() {
     getCharacters();
   }, []);
 
+  // Check for game over
   useEffect(() => {
     markers.length === characters.length &&
       markers.length > 0 &&
       setGameOver(true);
   }, [markers.length, characters.length]);
 
+  // Get the score (time) of the last player
   useEffect(() => {
     const getScore = async (id) => {
+      if (!gameOver) {
+        return;
+      }
       const response = await fetch(`http://localhost:3000/scores/${id}`);
       const result = await response.json();
       const startTime = new Date(result.created_at);
       const now = new Date();
       console.log(differenceInSeconds(now, startTime));
+      setIsOpen(true);
     };
     getScore(scoreId);
   }, [gameOver, scoreId]);
@@ -95,7 +104,7 @@ function App() {
         gameOver={gameOver}
         setScoreId={setScoreId}
       />
-      <div>{gameOver ? "gameisover" : "gamison"}</div>
+      <NameInputModal isOpen={isOpen} />
       <img onClick={handleClick} src={wallyImg}></img>
       <div className="markers">{markerList}</div>
     </>
