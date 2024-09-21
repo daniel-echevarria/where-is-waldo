@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import wallyImg from "./assets/wally.jpg";
-import CharacterSelection from "./components/CharacterSelection";
+import CharacterSelection from "./components/CharacterSelection/CharacterSelection";
 import { differenceInSeconds } from "date-fns";
-import NameInputModal from "./components/NameInputModal";
-import AnswerFeedback from "./components/AnswerFeedback";
+import EndGameModal from "./components/EndGameModal/EndGameModal";
+import AnswerFeedback from "./components/AnswerFeedback/AnswerFeedback";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -117,7 +117,7 @@ function App() {
         gameOver={gameOver}
         setScoreId={setScoreId}
       />
-      <NameInputModal
+      <EndGameModal
         isOpen={gameOver}
         setName={setName}
         timeScore={timeScore}

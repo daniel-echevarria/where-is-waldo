@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import CustomInput from "./CustomInput";
-import "./NameInputModal.css";
-import Podium from "./Podium";
+import CustomInput from "../CustomInput/CustomInput";
+import "./EndGameModal.css";
+import Podium from "../Podium/Podium";
 
-const NameInputModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
+const EndGameModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
   const [value, setValue] = useState("");
   const [topScores, setTopScores] = useState([]);
   const [saved, setSaved] = useState(false);
@@ -57,4 +57,4 @@ const NameInputModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
   );
 };
 
-export default NameInputModal;
+export default EndGameModal;
