@@ -13,16 +13,11 @@
 }
 
 .char-selection {
+  z-index: 1;
   display: flex;
   gap: 10px;
   position: absolute;
   /* border: 1px solid pink; */
-}
-
-.answer-box {
-  padding: 30px;
-  font-size: 124px;
-  position: absolute;
 }
 
 .marker {

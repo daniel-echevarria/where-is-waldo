@@ -4,6 +4,7 @@ import wallyImg from "./assets/wally.jpg";
 import CharacterSelection from "./components/CharacterSelection";
 import { differenceInSeconds } from "date-fns";
 import NameInputModal from "./components/NameInputModal";
+import AnswerFeedback from "./components/AnswerFeedback";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -78,12 +79,6 @@ function App() {
     setAnswer(null);
   };
 
-  const Answer = () => {
-    return <div className={answer}>{answer === "correct" ? "✅" : "❌"}</div>;
-  };
-
-  const answerBox = answer && visible ? <Answer /> : "";
-
   const markerList = markers.map((marker) => {
     return (
       <div
@@ -110,7 +105,7 @@ function App() {
 
   return (
     <main>
-      <div className="answer-box">{answerBox}</div>
+      <AnswerFeedback answer={answer} />
       <CharacterSelection
         clickCoordinates={clickCoordinates}
         relativeCoord={relativeCoord}
