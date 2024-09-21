@@ -110,6 +110,7 @@ function App() {
         clickCoordinates={clickCoordinates}
         relativeCoord={relativeCoord}
         visible={visible}
+        setVisible={setVisible}
         setAnswer={setAnswer}
         placeMarker={placeMarker}
         characters={characters}

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 const CharacterSelection = ({
   clickCoordinates,
   visible,
+  setVisible,
   relativeCoord,
   setAnswer,
   placeMarker,
@@ -56,6 +57,7 @@ const CharacterSelection = ({
     const nailedIt = charIsInCircle(relativeCoord, selectedChar);
     nailedIt && placeMarker({ name: e.target.value, x: xPos, y: yPos });
     setAnswer(nailedIt ? "correct" : "wrong");
+    setVisible(false);
   };
 
   const charList = characters.map((char) => {
