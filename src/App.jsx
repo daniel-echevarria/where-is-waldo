@@ -12,29 +12,11 @@ function App() {
   const [relativeCoord, setRelativeCoord] = useState({ x: 0, y: 0 });
   const [markers, setMarkers] = useState([]);
   const [answer, setAnswer] = useState(null);
-  const [characters, setCharacters] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [currentPlayerScoreId, setCurrentPlayerScoreId] = useState(null);
   const [name, setName] = useState(null);
   const [timeScore, setTimeScore] = useState(null);
   const [didScoresUpdate, setDidScoresUpdate] = useState(false);
-
-  // Get Characters from Backend
-  useEffect(() => {
-    const getCharacters = async () => {
-      const response = await fetch("http://localhost:3000/personages");
-      const charactersObjects = await response.json();
-      setCharacters(charactersObjects);
-    };
-    getCharacters();
-  }, []);
-
-  // Check for game over
-  useEffect(() => {
-    markers.length > 0 &&
-      markers.length === characters.length &&
-      setGameOver(true);
-  }, [markers.length, characters.length]);
 
   // Get the score (time) of the last player
   useEffect(() => {
@@ -71,6 +53,25 @@ function App() {
     };
     updatePlayerName();
   }, [currentPlayerScoreId, name, timeScore]);
+
+  // Create the record (to start tracking time) when page loads
+  useEffect(() => {
+    const createScore = async () => {
+      const scoreData = { name: "Player1" };
+      const response = await fetch("http://localhost:3000/scores", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(scoreData),
+      });
+
+      const result = await response.json();
+      setCurrentPlayerScoreId(result.id);
+    };
+
+    createScore();
+  }, [setCurrentPlayerScoreId]);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -118,9 +119,8 @@ function App() {
         setVisible={setVisible}
         setAnswer={setAnswer}
         placeMarker={placeMarker}
-        characters={characters}
-        gameOver={gameOver}
-        setCurrentPlayerScoreId={setCurrentPlayerScoreId}
+        markersLength={markers.length}
+        setGameOver={setGameOver}
       />
       <EndGameModal
         isOpen={gameOver}
@@ -128,7 +128,7 @@ function App() {
         timeScore={timeScore}
         didScoresUpdate={didScoresUpdate}
       />
-      <img onClick={handleClick} src={wallyImg}></img>
+      <img onClick={handleClick} src={wallyImg} />
       <div className="markers">{markerList}</div>
     </main>
   );

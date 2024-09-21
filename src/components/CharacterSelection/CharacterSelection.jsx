@@ -11,27 +11,27 @@ const CharacterSelection = ({
   relativeCoord,
   setAnswer,
   placeMarker,
-  characters,
-  setCurrentPlayerScoreId,
+  markersLength,
+  setGameOver,
 }) => {
-  // Create score record to track time
+  const [characters, setCharacters] = useState([]);
+
+  // Get Characters from Backend
   useEffect(() => {
-    const createScore = async () => {
-      const scoreData = { name: "Player1" };
-      const response = await fetch("http://localhost:3000/scores", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(scoreData),
-      });
-
-      const result = await response.json();
-      setCurrentPlayerScoreId(result.id);
+    const getCharacters = async () => {
+      const response = await fetch("http://localhost:3000/personages");
+      const charactersObjects = await response.json();
+      setCharacters(charactersObjects);
     };
+    getCharacters();
+  }, []);
 
-    createScore();
-  }, [setCurrentPlayerScoreId]);
+  // Check if game is over
+  useEffect(() => {
+    markersLength > 0 &&
+      markersLength === characters.length &&
+      setGameOver(true);
+  }, [setGameOver, markersLength, characters.length]);
 
   const circleDiameter = 40;
   const circleRadius = circleDiameter / 2;

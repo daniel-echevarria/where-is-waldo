@@ -1,0 +1,24 @@
+.podium {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+
+.podium .score-row {
+  display: flex;
+  justify-content: space-between;
+  /* border: 1px solid black; */
+}
+
+.gold {
+  border: 2px solid gold;
+}
+
+.silver {
+  border: 2px solid silver;
+}
+
+.bronze {
+  border: 2px solid brown;
+}
