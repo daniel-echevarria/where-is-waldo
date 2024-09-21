@@ -16,6 +16,7 @@ function App() {
   const [scoreId, setScoreId] = useState(null);
   const [name, setName] = useState(null);
   const [timeScore, setTimeScore] = useState(null);
+  const [didScoresUpdate, setDidScoresUpdate] = useState(false);
 
   // Get Characters from Backend
   useEffect(() => {
@@ -60,7 +61,7 @@ function App() {
         body: JSON.stringify({ name, time_score: timeScore }),
       });
       const result = await response.json();
-      console.log(result);
+      setDidScoresUpdate(true);
     };
     updatePlayerName();
   }, [scoreId, name, timeScore]);
@@ -124,6 +125,7 @@ function App() {
         isOpen={gameOver}
         setName={setName}
         timeScore={timeScore}
+        didScoresUpdate={didScoresUpdate}
       />
       <img onClick={handleClick} src={wallyImg}></img>
       <div className="markers">{markerList}</div>

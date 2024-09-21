@@ -3,7 +3,7 @@ import CustomInput from "./CustomInput";
 import "./NameInputModal.css";
 import Podium from "./Podium";
 
-const NameInputModal = ({ isOpen, setName, timeScore }) => {
+const NameInputModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
   const [value, setValue] = useState("");
   const [topScores, setTopScores] = useState([]);
 
@@ -14,7 +14,7 @@ const NameInputModal = ({ isOpen, setName, timeScore }) => {
       setTopScores(result);
     };
     getTopScores();
-  }, []);
+  }, [didScoresUpdate]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -26,6 +26,7 @@ const NameInputModal = ({ isOpen, setName, timeScore }) => {
 
   const isInPodium = () => {
     const topTimes = topScores.map((top) => top.time_score);
+    if (topTimes.length < 1) return true;
     return timeScore < topTimes[topTimes.length - 1];
   };
 
