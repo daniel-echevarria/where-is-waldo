@@ -25,6 +25,7 @@ const EndGameModal = ({ isOpen, timeScore, currentPlayerScoreId }) => {
           body: JSON.stringify({ name, time_score: timeScore }),
         }
       );
+      console.log("updated");
       const result = await response.json();
       setDidScoresUpdate(true);
     };
@@ -42,7 +43,7 @@ const EndGameModal = ({ isOpen, timeScore, currentPlayerScoreId }) => {
   }, [didScoresUpdate]);
 
   const handleChange = (e) => {
-    setInputValue(e.target.inputValue);
+    setInputValue(e.target.value);
   };
 
   const handleSaveName = () => {
@@ -78,6 +79,7 @@ const EndGameModal = ({ isOpen, timeScore, currentPlayerScoreId }) => {
               </label>
             </>
           )}
+          <button onClick={() => window.location.reload()}>Replay</button>
         </div>
       )}
     </>
