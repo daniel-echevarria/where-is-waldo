@@ -14,7 +14,7 @@ function App() {
   const [answer, setAnswer] = useState(null);
   const [characters, setCharacters] = useState([]);
   const [gameOver, setGameOver] = useState(false);
-  const [scoreId, setScoreId] = useState(null);
+  const [currentPlayerScoreId, setCurrentPlayerScoreId] = useState(null);
   const [name, setName] = useState(null);
   const [timeScore, setTimeScore] = useState(null);
   const [didScoresUpdate, setDidScoresUpdate] = useState(false);
@@ -40,32 +40,37 @@ function App() {
   useEffect(() => {
     if (!gameOver) return;
     const getScore = async () => {
-      const response = await fetch(`http://localhost:3000/scores/${scoreId}`);
+      const response = await fetch(
+        `http://localhost:3000/scores/${currentPlayerScoreId}`
+      );
       const result = await response.json();
       const startTime = new Date(result.created_at);
       const now = new Date();
       setTimeScore(differenceInSeconds(now, startTime));
     };
     getScore();
-  }, [gameOver, scoreId]);
+  }, [gameOver, currentPlayerScoreId]);
 
   // Update The Score Record with the name and score
   useEffect(() => {
     if (!name) return;
     const updatePlayerName = async () => {
-      const response = await fetch(`http://localhost:3000/scores/${scoreId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await fetch(
+        `http://localhost:3000/scores/${currentPlayerScoreId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-        body: JSON.stringify({ name, time_score: timeScore }),
-      });
+          body: JSON.stringify({ name, time_score: timeScore }),
+        }
+      );
       const result = await response.json();
       setDidScoresUpdate(true);
     };
     updatePlayerName();
-  }, [scoreId, name, timeScore]);
+  }, [currentPlayerScoreId, name, timeScore]);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -115,7 +120,7 @@ function App() {
         placeMarker={placeMarker}
         characters={characters}
         gameOver={gameOver}
-        setScoreId={setScoreId}
+        setCurrentPlayerScoreId={setCurrentPlayerScoreId}
       />
       <EndGameModal
         isOpen={gameOver}

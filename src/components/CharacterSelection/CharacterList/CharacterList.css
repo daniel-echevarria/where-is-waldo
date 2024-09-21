@@ -1,0 +1,8 @@
+.char-list {
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+  gap: 2px;
+  /* border: 2px solid white; */
+  /* background-color: wheat; */
+}

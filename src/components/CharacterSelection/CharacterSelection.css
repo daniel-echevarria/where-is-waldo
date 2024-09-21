@@ -1,23 +1,9 @@
-.targeting-square {
-  border: 3px solid white;
-  border-radius: 50%;
-}
-
-.char-list {
-  display: flex;
-  flex-direction: column;
-  padding: 2px;
-  gap: 2px;
-  /* border: 2px solid white; */
-  /* background-color: wheat; */
-}
-
 .char-selection {
   z-index: 1;
   display: flex;
   gap: 10px;
   position: absolute;
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
 }
 
 .marker {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import CustomInput from "../CustomInput/CustomInput";
+import CustomInput from "./CustomInput/CustomInput";
 import "./EndGameModal.css";
-import Podium from "../Podium/Podium";
+import Podium from "./Podium/Podium";
 
 const EndGameModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
   const [value, setValue] = useState("");

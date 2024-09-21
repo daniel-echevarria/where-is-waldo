@@ -1,7 +1,8 @@
 import "./CharacterSelection.css";
 import _ from "lodash";
 import { useState, useEffect } from "react";
-import TargetingCircle from "../TargetingCircle/TargetingCircle";
+import TargetingCircle from "./TargetingCircle/TargetingCircle";
+import CharacterList from "./CharacterList/CharacterList";
 
 const CharacterSelection = ({
   clickCoordinates,
@@ -11,8 +12,9 @@ const CharacterSelection = ({
   setAnswer,
   placeMarker,
   characters,
-  setScoreId,
+  setCurrentPlayerScoreId,
 }) => {
+  // Create score record to track time
   useEffect(() => {
     const createScore = async () => {
       const scoreData = { name: "Player1" };
@@ -25,13 +27,13 @@ const CharacterSelection = ({
       });
 
       const result = await response.json();
-      setScoreId(result.id);
+      setCurrentPlayerScoreId(result.id);
     };
 
     createScore();
-  }, [setScoreId]);
+  }, [setCurrentPlayerScoreId]);
 
-  const circleDiameter = 30;
+  const circleDiameter = 40;
   const circleRadius = circleDiameter / 2;
   const xPos = clickCoordinates.x - circleRadius - 2;
   const yPos = clickCoordinates.y - circleRadius - 2;
@@ -61,25 +63,16 @@ const CharacterSelection = ({
     setVisible(false);
   };
 
-  const charList = characters.map((char) => {
-    return (
-      <button
-        key={char.name}
-        value={char.name}
-        onClick={handleCharacterSelection}
-      >
-        {char.name}
-      </button>
-    );
-  });
-
   return (
     <div
       className="char-selection"
       style={{ display: display, top: yPos, left: xPos }}
     >
       <TargetingCircle circleDiameter={circleDiameter} />
-      <div className="char-list">{charList}</div>
+      <CharacterList
+        characters={characters}
+        handleCharacterSelection={handleCharacterSelection}
+      />
     </div>
   );
 };
