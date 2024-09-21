@@ -2,13 +2,30 @@ import { useEffect, useState } from "react";
 import CustomInput from "./CustomInput/CustomInput";
 import "./EndGameModal.css";
 import Podium from "./Podium/Podium";
+import { differenceInSeconds } from "date-fns";
 
-const EndGameModal = ({ isOpen, timeScore, currentPlayerScoreId }) => {
-  const [name, setName] = useState(null);
+const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
   const [inputValue, setInputValue] = useState("");
+  const [name, setName] = useState(null);
   const [topScores, setTopScores] = useState([]);
   const [saved, setSaved] = useState(false);
   const [didScoresUpdate, setDidScoresUpdate] = useState(false);
+  const [timeScore, setTimeScore] = useState(null);
+
+  // Get the score (time) of the last player
+  useEffect(() => {
+    if (!gameOver) return;
+    const getScore = async () => {
+      const response = await fetch(
+        `http://localhost:3000/scores/${currentPlayerScoreId}`
+      );
+      const result = await response.json();
+      const startTime = new Date(result.created_at);
+      const now = new Date();
+      setTimeScore(differenceInSeconds(now, startTime));
+    };
+    getScore();
+  }, [gameOver, currentPlayerScoreId]);
 
   // Update score record with the name and the score when the name changes
   useEffect(() => {
@@ -59,7 +76,7 @@ const EndGameModal = ({ isOpen, timeScore, currentPlayerScoreId }) => {
 
   return (
     <>
-      {isOpen && (
+      {gameOver && (
         <div className="modal">
           <span>You found all the characters in {timeScore} seconds! </span>
           <Podium topScores={topScores} />

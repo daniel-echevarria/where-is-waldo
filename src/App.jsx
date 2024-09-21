@@ -16,23 +16,6 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [currentPlayerScoreId, setCurrentPlayerScoreId] = useState(null);
 
-  const [timeScore, setTimeScore] = useState(null);
-
-  // Get the score (time) of the last player
-  useEffect(() => {
-    if (!gameOver) return;
-    const getScore = async () => {
-      const response = await fetch(
-        `http://localhost:3000/scores/${currentPlayerScoreId}`
-      );
-      const result = await response.json();
-      const startTime = new Date(result.created_at);
-      const now = new Date();
-      setTimeScore(differenceInSeconds(now, startTime));
-    };
-    getScore();
-  }, [gameOver, currentPlayerScoreId]);
-
   // Update The Score Record with the name and score
 
   // Create the record (to start tracking time) when page loads
@@ -91,9 +74,8 @@ function App() {
         setGameOver={setGameOver}
       />
       <EndGameModal
-        isOpen={gameOver}
-        timeScore={timeScore}
         currentPlayerScoreId={currentPlayerScoreId}
+        gameOver={gameOver}
       />
       <img onClick={handleClick} src={wallyImg} />
       <MarkerList markers={markers} />
