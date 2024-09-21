@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Podium = () => {
-  const [topScores, setTopScores] = useState([]);
-  useEffect(() => {
-    const getTopScores = async () => {
-      const response = await fetch("http://localhost:3000/scores_top");
-      const result = await response.json();
-      setTopScores(result);
-    };
-    getTopScores();
-  }, []);
-
+const Podium = ({ topScores }) => {
   const ScoreList = topScores.map((topScore) => {
     return (
       <div key={topScore.id} className="score-row">
