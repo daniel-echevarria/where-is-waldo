@@ -5,6 +5,7 @@ import CharacterSelection from "./components/CharacterSelection/CharacterSelecti
 import { differenceInSeconds } from "date-fns";
 import EndGameModal from "./components/EndGameModal/EndGameModal";
 import AnswerFeedback from "./components/AnswerFeedback/AnswerFeedback";
+import MarkerList from "./components/MarkerList/MarkerList";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -14,9 +15,8 @@ function App() {
   const [answer, setAnswer] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [currentPlayerScoreId, setCurrentPlayerScoreId] = useState(null);
-  const [name, setName] = useState(null);
+
   const [timeScore, setTimeScore] = useState(null);
-  const [didScoresUpdate, setDidScoresUpdate] = useState(false);
 
   // Get the score (time) of the last player
   useEffect(() => {
@@ -34,25 +34,6 @@ function App() {
   }, [gameOver, currentPlayerScoreId]);
 
   // Update The Score Record with the name and score
-  useEffect(() => {
-    if (!name) return;
-    const updatePlayerName = async () => {
-      const response = await fetch(
-        `http://localhost:3000/scores/${currentPlayerScoreId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({ name, time_score: timeScore }),
-        }
-      );
-      const result = await response.json();
-      setDidScoresUpdate(true);
-    };
-    updatePlayerName();
-  }, [currentPlayerScoreId, name, timeScore]);
 
   // Create the record (to start tracking time) when page loads
   useEffect(() => {
@@ -85,19 +66,6 @@ function App() {
     setAnswer(null);
   };
 
-  const markerList = markers.map((marker) => {
-    return (
-      <div
-        key={marker.name}
-        className="marker"
-        style={{ top: marker.y, left: marker.x }}
-      >
-        <span>{"❎"}</span>
-        <span className="marker-name">{marker.name}</span>
-      </div>
-    );
-  });
-
   const placeMarker = (marker) => {
     setMarkers([
       ...markers,
@@ -124,12 +92,11 @@ function App() {
       />
       <EndGameModal
         isOpen={gameOver}
-        setName={setName}
         timeScore={timeScore}
-        didScoresUpdate={didScoresUpdate}
+        currentPlayerScoreId={currentPlayerScoreId}
       />
       <img onClick={handleClick} src={wallyImg} />
-      <div className="markers">{markerList}</div>
+      <MarkerList markers={markers} />
     </main>
   );
 }

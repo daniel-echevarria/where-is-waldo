@@ -3,11 +3,35 @@ import CustomInput from "./CustomInput/CustomInput";
 import "./EndGameModal.css";
 import Podium from "./Podium/Podium";
 
-const EndGameModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
-  const [value, setValue] = useState("");
+const EndGameModal = ({ isOpen, timeScore, currentPlayerScoreId }) => {
+  const [name, setName] = useState(null);
+  const [inputValue, setInputValue] = useState("");
   const [topScores, setTopScores] = useState([]);
   const [saved, setSaved] = useState(false);
+  const [didScoresUpdate, setDidScoresUpdate] = useState(false);
 
+  // Update score record with the name and the score when the name changes
+  useEffect(() => {
+    if (!name) return;
+    const updatePlayerName = async () => {
+      const response = await fetch(
+        `http://localhost:3000/scores/${currentPlayerScoreId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({ name, time_score: timeScore }),
+        }
+      );
+      const result = await response.json();
+      setDidScoresUpdate(true);
+    };
+    updatePlayerName();
+  }, [currentPlayerScoreId, name, timeScore]);
+
+  // Get Top Scores
   useEffect(() => {
     const getTopScores = async () => {
       const response = await fetch("http://localhost:3000/scores_top");
@@ -18,11 +42,11 @@ const EndGameModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
   }, [didScoresUpdate]);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setInputValue(e.target.inputValue);
   };
 
   const handleSaveName = () => {
-    setName(value);
+    setName(inputValue);
     setSaved(true);
   };
 
@@ -46,7 +70,10 @@ const EndGameModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
               </span>
               <label>
                 Name
-                <CustomInput handleChange={handleChange} value={value} />
+                <CustomInput
+                  handleChange={handleChange}
+                  inputValue={inputValue}
+                />
                 <button onClick={handleSaveName}>Save</button>
               </label>
             </>
