@@ -1,6 +1,7 @@
 import "./CharacterSelection.css";
 import _ from "lodash";
 import { useState, useEffect } from "react";
+import TargetingCircle from "../TargetingCircle/TargetingCircle";
 
 const CharacterSelection = ({
   clickCoordinates,
@@ -77,10 +78,7 @@ const CharacterSelection = ({
       className="char-selection"
       style={{ display: display, top: yPos, left: xPos }}
     >
-      <div
-        className="targeting-square"
-        style={{ width: circleDiameter, height: circleDiameter }}
-      ></div>
+      <TargetingCircle circleDiameter={circleDiameter} />
       <div className="char-list">{charList}</div>
     </div>
   );
