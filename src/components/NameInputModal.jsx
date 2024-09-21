@@ -6,6 +6,7 @@ import Podium from "./Podium";
 const NameInputModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
   const [value, setValue] = useState("");
   const [topScores, setTopScores] = useState([]);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     const getTopScores = async () => {
@@ -22,11 +23,12 @@ const NameInputModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
 
   const handleSaveName = () => {
     setName(value);
+    setSaved(true);
   };
 
   const isInPodium = () => {
     const topTimes = topScores.map((top) => top.time_score);
-    if (topTimes.length < 1) return true;
+    if (topTimes.length < 3) return true;
     return timeScore < topTimes[topTimes.length - 1];
   };
 
@@ -36,7 +38,7 @@ const NameInputModal = ({ isOpen, setName, timeScore, didScoresUpdate }) => {
         <div className="modal">
           <span>You found all the characters in {timeScore} seconds! </span>
           <Podium topScores={topScores} />
-          {isInPodium() && (
+          {isInPodium() && !saved && (
             <>
               <span>
                 Congrats you are among the top 3 quickest waldo finders! <br />{" "}
