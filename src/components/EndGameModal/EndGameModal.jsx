@@ -15,7 +15,7 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
     if (!gameOver) return;
     const getScore = async () => {
       const response = await fetch(
-        `http://localhost:3000/scores/${currentPlayerScoreId}`
+        `https://mysite-o46z.onrender.com/scores/${currentPlayerScoreId}`
       );
       const result = await response.json();
       const startTime = new Date(result.created_at);
@@ -30,7 +30,7 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
     if (!name) return;
     const updatePlayerName = async () => {
       const response = await fetch(
-        `http://localhost:3000/scores/${currentPlayerScoreId}`,
+        `https://mysite-o46z.onrender.com/scores/${currentPlayerScoreId}`,
         {
           method: "PUT",
           headers: {
@@ -49,7 +49,9 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
   // Get Top Scores
   useEffect(() => {
     const getTopScores = async () => {
-      const response = await fetch("http://localhost:3000/scores_top");
+      const response = await fetch(
+        "https://mysite-o46z.onrender.com/scores_top"
+      );
       const result = await response.json();
       setTopScores(result);
     };

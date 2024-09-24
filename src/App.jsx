@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     const createScore = async () => {
       const scoreData = { name: "Player1" };
-      const response = await fetch("http://localhost:3000/scores", {
+      const response = await fetch("https://mysite-o46z.onrender.com/scores", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

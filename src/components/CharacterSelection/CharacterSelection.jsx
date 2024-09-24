@@ -19,7 +19,9 @@ const CharacterSelection = ({
   // Get Characters from Backend
   useEffect(() => {
     const getCharacters = async () => {
-      const response = await fetch("http://localhost:3000/personages");
+      const response = await fetch(
+        "https://mysite-o46z.onrender.com/personages"
+      );
       const charactersObjects = await response.json();
       setCharacters(charactersObjects);
     };
