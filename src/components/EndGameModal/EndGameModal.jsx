@@ -5,10 +5,8 @@ import Podium from "./Podium/Podium";
 import { differenceInSeconds } from "date-fns";
 
 const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
-  const [inputValue, setInputValue] = useState("");
   const [name, setName] = useState(null);
   const [topScores, setTopScores] = useState([]);
-  const [saved, setSaved] = useState(false);
   const [didScoresUpdate, setDidScoresUpdate] = useState(false);
   const [timeScore, setTimeScore] = useState(null);
 
@@ -42,7 +40,6 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
           body: JSON.stringify({ name, time_score: timeScore }),
         }
       );
-      console.log("updated");
       const result = await response.json();
       setDidScoresUpdate(true);
     };
@@ -59,15 +56,6 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
     getTopScores();
   }, [didScoresUpdate]);
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleSaveName = () => {
-    setName(inputValue);
-    setSaved(true);
-  };
-
   const isInPodium = () => {
     const topTimes = topScores.map((top) => top.time_score);
     if (topTimes.length < 3) return true;
@@ -80,19 +68,15 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
         <div className="modal">
           <span>You found all the characters in {timeScore} seconds! </span>
           <Podium topScores={topScores} />
-          {isInPodium() && !saved && (
+          {isInPodium() && !name && (
             <>
               <span>
-                Congrats you are among the top 3 quickest waldo finders! <br />{" "}
+                Congrats you are among the top 3 quickest waldo finders! <br />
                 You may input your name for the grand podium!
               </span>
               <label>
                 Name
-                <CustomInput
-                  handleChange={handleChange}
-                  inputValue={inputValue}
-                />
-                <button onClick={handleSaveName}>Save</button>
+                <CustomInput setName={setName} />
               </label>
             </>
           )}

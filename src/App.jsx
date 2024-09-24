@@ -40,10 +40,8 @@ function App() {
     const rect = e.target.getBoundingClientRect();
     const inImgX = Math.round(e.clientX - rect.x);
     const inImgY = Math.round(e.clientY - rect.y);
-    const inImgCoordinates = { x: inImgX, y: inImgY };
-    const clientCoordinates = { x: e.clientX, y: e.clientY };
-    setClickCoordinates(clientCoordinates);
-    setRelativeCoord(inImgCoordinates);
+    setClickCoordinates({ x: e.clientX, y: e.clientY });
+    setRelativeCoord({ x: inImgX, y: inImgY });
     setVisible(visible ? false : true);
     setAnswer(null);
   };

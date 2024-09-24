@@ -1,8 +1,8 @@
-# React + Vite
+# Where is Waldo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application game where users try to find different characters within an image as fast as possible
 
-Currently, two official plugins are available:
+## Features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Tag specific areas of an image.
+- View top scorers
