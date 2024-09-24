@@ -7,6 +7,7 @@ import AnswerFeedback from "./components/AnswerFeedback/AnswerFeedback";
 import MarkerList from "./components/MarkerList/MarkerList";
 
 function App() {
+  const [gameStarted, setGameStarted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
   const [relativeCoord, setRelativeCoord] = useState({ x: 0, y: 0 });
@@ -57,7 +58,7 @@ function App() {
     ]);
   };
 
-  return (
+  return gameStarted ? (
     <main>
       <AnswerFeedback answer={answer} />
       <CharacterSelection
@@ -77,6 +78,8 @@ function App() {
       <img onClick={handleClick} src={wallyImg} />
       <MarkerList markers={markers} />
     </main>
+  ) : (
+    <button onClick={() => setGameStarted(true)}>Start Game!</button>
   );
 }
 
