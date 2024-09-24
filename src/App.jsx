@@ -40,7 +40,7 @@ function App() {
     const rect = e.target.getBoundingClientRect();
     const inImgX = Math.round(e.clientX - rect.x);
     const inImgY = Math.round(e.clientY - rect.y);
-    setClickCoordinates({ x: e.clientX, y: e.clientY });
+    setClickCoordinates({ x: e.pageX, y: e.pageY });
     setRelativeCoord({ x: inImgX, y: inImgY });
     setVisible(visible ? false : true);
     setAnswer(null);
