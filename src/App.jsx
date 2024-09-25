@@ -6,7 +6,10 @@ import EndGameModal from "./components/EndGameModal/EndGameModal";
 import AnswerFeedback from "./components/AnswerFeedback/AnswerFeedback";
 import MarkerList from "./components/MarkerList/MarkerList";
 import apiUrl from "./config";
+<<<<<<< HEAD
 import IntroPage from "./components/IntroPage/IntroPage";
+=======
+>>>>>>> 3e831ad785deaf70ac550f095dce121fec73e7e5
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
