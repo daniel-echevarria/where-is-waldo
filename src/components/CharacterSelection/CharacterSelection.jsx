@@ -1,6 +1,6 @@
 import "./CharacterSelection.css";
 import _ from "lodash";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import TargetingCircle from "./TargetingCircle/TargetingCircle";
 import CharacterList from "./CharacterList/CharacterList";
 import apiUrl from "../../config";
@@ -16,6 +16,7 @@ const CharacterSelection = ({
   setGameOver,
 }) => {
   const [characters, setCharacters] = useState([]);
+  const numCharacters = useRef(null);
 
   // Get Characters from Backend
   useEffect(() => {
@@ -24,6 +25,7 @@ const CharacterSelection = ({
         mode: "cors",
       });
       const charactersObjects = await response.json();
+      numCharacters.current = charactersObjects.length;
       setCharacters(charactersObjects);
     };
     getCharacters();
@@ -32,7 +34,7 @@ const CharacterSelection = ({
   // Check if game is over
   useEffect(() => {
     markersLength > 0 &&
-      markersLength === characters.length &&
+      markersLength === numCharacters.current &&
       setGameOver(true);
   }, [setGameOver, markersLength, characters.length]);
 
@@ -60,9 +62,16 @@ const CharacterSelection = ({
     const selectedChar = characters.find(
       (char) => char.name === e.target.value
     );
-    const nailedIt = charIsInCircle(relativeCoord, selectedChar);
-    nailedIt && placeMarker({ name: e.target.value, x: xPos, y: yPos });
-    setAnswer(nailedIt ? "correct" : "wrong");
+    if (charIsInCircle(relativeCoord, selectedChar)) {
+      setCharacters(characters.filter((char) => char !== selectedChar));
+      placeMarker({ name: e.target.value, x: xPos, y: yPos });
+      setAnswer("correct");
+    } else {
+      setAnswer("wrong");
+    }
+    // const nailedIt = charIsInCircle(relativeCoord, selectedChar);
+    // nailedIt && placeMarker({ name: e.target.value, x: xPos, y: yPos });
+    // setAnswer(nailedIt ? "correct" : "wrong");
     setVisible(false);
   };
 
