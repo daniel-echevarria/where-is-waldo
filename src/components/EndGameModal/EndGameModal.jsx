@@ -5,11 +5,32 @@ import Podium from "./Podium/Podium";
 import { differenceInSeconds } from "date-fns";
 import apiUrl from "../../config";
 
-const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
+const EndGameModal = ({ gameOver }) => {
   const [name, setName] = useState(null);
   const [topScores, setTopScores] = useState([]);
   const [didScoresUpdate, setDidScoresUpdate] = useState(false);
   const [timeScore, setTimeScore] = useState(null);
+  const [currentPlayerScoreId, setCurrentPlayerScoreId] = useState(null);
+
+  // Create the record (to start tracking time) when page loads
+  useEffect(() => {
+    const createScore = async () => {
+      const scoreData = { name: "Player1" };
+      const response = await fetch(`${apiUrl}/scores`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(scoreData),
+      });
+
+      const result = await response.json();
+      setCurrentPlayerScoreId(result.id);
+    };
+
+    createScore();
+  }, []);
 
   // Get the score (time) of the last player
   useEffect(() => {

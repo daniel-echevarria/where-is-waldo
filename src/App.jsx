@@ -6,10 +6,7 @@ import EndGameModal from "./components/EndGameModal/EndGameModal";
 import AnswerFeedback from "./components/AnswerFeedback/AnswerFeedback";
 import MarkerList from "./components/MarkerList/MarkerList";
 import apiUrl from "./config";
-<<<<<<< HEAD
 import IntroPage from "./components/IntroPage/IntroPage";
-=======
->>>>>>> 3e831ad785deaf70ac550f095dce121fec73e7e5
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -19,27 +16,6 @@ function App() {
   const [markers, setMarkers] = useState([]);
   const [answer, setAnswer] = useState(null);
   const [gameOver, setGameOver] = useState(false);
-  const [currentPlayerScoreId, setCurrentPlayerScoreId] = useState(null);
-
-  // Create the record (to start tracking time) when page loads
-  useEffect(() => {
-    const createScore = async () => {
-      const scoreData = { name: "Player1" };
-      const response = await fetch(`${apiUrl}/scores`, {
-        mode: "cors",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(scoreData),
-      });
-
-      const result = await response.json();
-      setCurrentPlayerScoreId(result.id);
-    };
-
-    createScore();
-  }, [setCurrentPlayerScoreId]);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -77,7 +53,7 @@ function App() {
         apiUrl={apiUrl}
       />
       <EndGameModal
-        currentPlayerScoreId={currentPlayerScoreId}
+        // currentPlayerScoreId={currentPlayerScoreId}
         gameOver={gameOver}
       />
       <img onClick={handleClick} src={wallyImg} />

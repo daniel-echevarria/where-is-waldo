@@ -27,3 +27,7 @@
 .modal label input {
   min-width: 200px;
 }
+
+.modal button {
+  border: 2px solid grey;
+}

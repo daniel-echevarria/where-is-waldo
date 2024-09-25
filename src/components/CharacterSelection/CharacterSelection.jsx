@@ -16,6 +16,7 @@ const CharacterSelection = ({
   setGameOver,
 }) => {
   const [characters, setCharacters] = useState([]);
+
   const numCharacters = useRef(null);
 
   // Get Characters from Backend
