@@ -3,6 +3,7 @@ import _ from "lodash";
 import { useState, useEffect } from "react";
 import TargetingCircle from "./TargetingCircle/TargetingCircle";
 import CharacterList from "./CharacterList/CharacterList";
+import apiUrl from "../../config";
 
 const CharacterSelection = ({
   clickCoordinates,
@@ -19,9 +20,9 @@ const CharacterSelection = ({
   // Get Characters from Backend
   useEffect(() => {
     const getCharacters = async () => {
-      const response = await fetch(
-        "https://mysite-o46z.onrender.com/personages"
-      );
+      const response = await fetch(`${apiUrl}/personages`, {
+        mode: "cors",
+      });
       const charactersObjects = await response.json();
       setCharacters(charactersObjects);
     };
@@ -35,7 +36,7 @@ const CharacterSelection = ({
       setGameOver(true);
   }, [setGameOver, markersLength, characters.length]);
 
-  const circleDiameter = 40;
+  const circleDiameter = 50;
   const circleRadius = circleDiameter / 2;
   const xPos = clickCoordinates.x - circleRadius - 2;
   const yPos = clickCoordinates.y - circleRadius - 2;
