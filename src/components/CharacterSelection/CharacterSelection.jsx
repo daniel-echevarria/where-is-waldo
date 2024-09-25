@@ -12,33 +12,9 @@ const CharacterSelection = ({
   relativeCoord,
   setAnswer,
   placeMarker,
-  markersLength,
-  setGameOver,
+  characters,
+  setCharacters,
 }) => {
-  const [characters, setCharacters] = useState([]);
-
-  const numCharacters = useRef(null);
-
-  // Get Characters from Backend
-  useEffect(() => {
-    const getCharacters = async () => {
-      const response = await fetch(`${apiUrl}/personages`, {
-        mode: "cors",
-      });
-      const charactersObjects = await response.json();
-      numCharacters.current = charactersObjects.length;
-      setCharacters(charactersObjects);
-    };
-    getCharacters();
-  }, []);
-
-  // Check if game is over
-  useEffect(() => {
-    markersLength > 0 &&
-      markersLength === numCharacters.current &&
-      setGameOver(true);
-  }, [setGameOver, markersLength, characters.length]);
-
   const circleDiameter = 50;
   const circleRadius = circleDiameter / 2;
   const xPos = clickCoordinates.x - circleRadius - 2;
