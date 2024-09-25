@@ -5,6 +5,7 @@ import CharacterSelection from "./components/CharacterSelection/CharacterSelecti
 import EndGameModal from "./components/EndGameModal/EndGameModal";
 import AnswerFeedback from "./components/AnswerFeedback/AnswerFeedback";
 import MarkerList from "./components/MarkerList/MarkerList";
+import apiUrl from "./config";
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -16,13 +17,12 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [currentPlayerScoreId, setCurrentPlayerScoreId] = useState(null);
 
-  // Update The Score Record with the name and score
-
   // Create the record (to start tracking time) when page loads
   useEffect(() => {
     const createScore = async () => {
       const scoreData = { name: "Player1" };
-      const response = await fetch("https://mysite-o46z.onrender.com/scores", {
+      const response = await fetch(`${apiUrl}/scores`, {
+        mode: "cors",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,6 +70,7 @@ function App() {
         placeMarker={placeMarker}
         markersLength={markers.length}
         setGameOver={setGameOver}
+        apiUrl={apiUrl}
       />
       <EndGameModal
         currentPlayerScoreId={currentPlayerScoreId}

@@ -3,6 +3,7 @@ import CustomInput from "./CustomInput/CustomInput";
 import "./EndGameModal.css";
 import Podium from "./Podium/Podium";
 import { differenceInSeconds } from "date-fns";
+import apiUrl from "../../config";
 
 const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
   const [name, setName] = useState(null);
@@ -14,9 +15,9 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
   useEffect(() => {
     if (!gameOver) return;
     const getScore = async () => {
-      const response = await fetch(
-        `https://mysite-o46z.onrender.com/scores/${currentPlayerScoreId}`
-      );
+      const response = await fetch(`${apiUrl}/scores/${currentPlayerScoreId}`, {
+        mode: "cors",
+      });
       const result = await response.json();
       const startTime = new Date(result.created_at);
       const now = new Date();
@@ -29,17 +30,14 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
   useEffect(() => {
     if (!name) return;
     const updatePlayerName = async () => {
-      const response = await fetch(
-        `https://mysite-o46z.onrender.com/scores/${currentPlayerScoreId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const response = await fetch(`${apiUrl}/scores/${currentPlayerScoreId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-          body: JSON.stringify({ name, time_score: timeScore }),
-        }
-      );
+        body: JSON.stringify({ name, time_score: timeScore }),
+      });
       const result = await response.json();
       setDidScoresUpdate(true);
     };
@@ -49,9 +47,9 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
   // Get Top Scores
   useEffect(() => {
     const getTopScores = async () => {
-      const response = await fetch(
-        "https://mysite-o46z.onrender.com/scores_top"
-      );
+      const response = await fetch(`${apiUrl}/scores_top`, {
+        mode: "cors",
+      });
       const result = await response.json();
       setTopScores(result);
     };

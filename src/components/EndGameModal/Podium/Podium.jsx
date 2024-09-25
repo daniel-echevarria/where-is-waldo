@@ -6,7 +6,10 @@ const Podium = ({ topScores }) => {
 
   const ScoreList = topScores.map((topScore, index) => {
     return (
-      <div key={topScore.id} className={`score-row ${colors[index]} `}>
+      <div
+        key={topScore.id}
+        className={`score-row ${colors[index] || "simple"} `}
+      >
         <span>{index + 1}.</span>
         <span className="name">{topScore.name}</span>
         <span className="timeScore">{topScore.time_score}s</span>
