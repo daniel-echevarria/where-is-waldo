@@ -66,7 +66,7 @@ const EndGameModal = ({ currentPlayerScoreId, gameOver }) => {
     <>
       {gameOver && (
         <div className="modal">
-          <span>You found all the characters in {timeScore} seconds! </span>
+          <span>You found all characters in {timeScore} seconds! 💨</span>
           <Podium topScores={topScores} />
           {isInPodium() && !name && (
             <>

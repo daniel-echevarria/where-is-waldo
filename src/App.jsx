@@ -6,6 +6,7 @@ import EndGameModal from "./components/EndGameModal/EndGameModal";
 import AnswerFeedback from "./components/AnswerFeedback/AnswerFeedback";
 import MarkerList from "./components/MarkerList/MarkerList";
 import apiUrl from "./config";
+import IntroPage from "./components/IntroPage/IntroPage";
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -80,7 +81,7 @@ function App() {
       <MarkerList markers={markers} />
     </main>
   ) : (
-    <button onClick={() => setGameStarted(true)}>Start Game!</button>
+    <IntroPage setGameStarted={setGameStarted} />
   );
 }
 
