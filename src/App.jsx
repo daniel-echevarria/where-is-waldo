@@ -82,7 +82,13 @@ function App() {
         <MarkerList markers={markers} />
       </main>
     ) : (
-      <>Loading...</>
+      <>
+        <h3>Loading...</h3>
+        <p>
+          (Given the free tier of render this might take up to 2min... Thanks
+          for your patience!)
+        </p>
+      </>
     )
   ) : (
     <IntroPage setIntroOver={setIntroOver} />
