@@ -1,7 +1,52 @@
 .answer-box {
   padding: 30px;
-  font-size: 12vh;
+  font-size: 20vh;
   position: fixed;
-  left: 50px;
-  top: 50px;
+  width: 100%;
+}
+
+.correct {
+  animation: correct 2s ease-in forwards, fade-out 2s ease-in forwards;
+}
+
+.wrong {
+  animation: wrong 0.1s ease-in-out 3 forwards, fade-out 1s ease-in forwards;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes wrong {
+  from {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate((20deg));
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes correct {
+  from {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+  to {
+    color: green;
+    transform: rotate(360deg);
+    opacity: 0;
+    display: none;
+  }
 }
