@@ -7,6 +7,7 @@ import AnswerFeedback from "./components/AnswerFeedback/AnswerFeedback";
 import MarkerList from "./components/MarkerList/MarkerList";
 import apiUrl from "./config";
 import IntroPage from "./components/IntroPage/IntroPage";
+import LoadingPage from "./components/LoadingPage/LoadingPage";
 
 function App() {
   const [introOver, setIntroOver] = useState(false);
@@ -82,13 +83,7 @@ function App() {
         <MarkerList markers={markers} />
       </main>
     ) : (
-      <>
-        <h3>Loading...</h3>
-        <p>
-          (Given the free tier of render this might take up to 2min... Thanks
-          for your patience!)
-        </p>
-      </>
+      <LoadingPage />
     )
   ) : (
     <IntroPage setIntroOver={setIntroOver} />
