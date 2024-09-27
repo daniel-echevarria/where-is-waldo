@@ -1,8 +1,6 @@
 import "./IntroPage.css";
 
 const IntroPage = ({ setIntroOver }) => {
-  // Launch the server
-
   return (
     <div className="intro">
       <h1>Where the F*ck is Waldo ?</h1>

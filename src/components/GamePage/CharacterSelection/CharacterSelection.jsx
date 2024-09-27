@@ -1,14 +1,12 @@
 import "./CharacterSelection.css";
 import _ from "lodash";
-import { useState, useEffect, useRef } from "react";
 import TargetingCircle from "./TargetingCircle/TargetingCircle";
 import CharacterList from "./CharacterList/CharacterList";
-import apiUrl from "../../config";
 
 const CharacterSelection = ({
   clickCoordinates,
-  visible,
-  setVisible,
+  showCharSelection,
+  setShowCharSelection,
   relativeCoord,
   setAnswer,
   placeMarker,
@@ -19,7 +17,7 @@ const CharacterSelection = ({
   const circleRadius = circleDiameter / 2;
   const xPos = clickCoordinates.x - circleRadius - 2;
   const yPos = clickCoordinates.y - circleRadius - 2;
-  const display = visible ? "flex" : "none";
+  const display = showCharSelection ? "flex" : "none";
 
   const isInTargetRange = (value, target, errorMargin) => {
     const lowerRange = target - errorMargin;
@@ -46,10 +44,7 @@ const CharacterSelection = ({
     } else {
       setAnswer("wrong");
     }
-    // const nailedIt = charIsInCircle(relativeCoord, selectedChar);
-    // nailedIt && placeMarker({ name: e.target.value, x: xPos, y: yPos });
-    // setAnswer(nailedIt ? "correct" : "wrong");
-    setVisible(false);
+    setShowCharSelection(false);
   };
 
   return (

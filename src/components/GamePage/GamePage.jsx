@@ -1,12 +1,14 @@
 import { useRef, useState, useEffect } from "react";
 import wallyImg from "../../assets/wally.jpg";
-import CharacterSelection from "../CharacterSelection/CharacterSelection";
-import EndGameModal from "../EndGameModal/EndGameModal";
-import AnswerFeedback from "../AnswerFeedback/AnswerFeedback";
-import MarkerList from "../MarkerList/MarkerList";
+import CharacterSelection from "./CharacterSelection/CharacterSelection";
+import EndGameModal from "./EndGameModal/EndGameModal";
+import AnswerFeedback from "./AnswerFeedback/AnswerFeedback";
+import MarkerList from "./MarkerList/MarkerList";
+import "./GamePage.css";
+import Targets from "./Targets/Targets";
 
 const GamePage = ({ characters, setCharacters }) => {
-  const [visible, setVisible] = useState(false);
+  const [showCharSelection, setShowCharSelection] = useState(false);
   const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
   const [relativeCoord, setRelativeCoord] = useState({ x: 0, y: 0 });
   const [markers, setMarkers] = useState([]);
@@ -27,7 +29,7 @@ const GamePage = ({ characters, setCharacters }) => {
     const inImgY = Math.round(e.clientY - rect.y);
     setClickCoordinates({ x: e.pageX, y: e.pageY });
     setRelativeCoord({ x: inImgX, y: inImgY });
-    setVisible(visible ? false : true);
+    setShowCharSelection(showCharSelection ? false : true);
     setAnswer(null);
   };
 
@@ -41,14 +43,16 @@ const GamePage = ({ characters, setCharacters }) => {
       },
     ]);
   };
+
   return (
     <main>
       <AnswerFeedback answer={answer} />
+      <Targets characters={characters} />
       <CharacterSelection
         clickCoordinates={clickCoordinates}
         relativeCoord={relativeCoord}
-        visible={visible}
-        setVisible={setVisible}
+        showCharSelection={showCharSelection}
+        setShowCharSelection={setShowCharSelection}
         setAnswer={setAnswer}
         placeMarker={placeMarker}
         setGameOver={setGameOver}

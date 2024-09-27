@@ -3,7 +3,7 @@ import CustomInput from "./CustomInput/CustomInput";
 import "./EndGameModal.css";
 import Podium from "./Podium/Podium";
 import { differenceInSeconds } from "date-fns";
-import apiUrl from "../../config";
+import apiUrl from "../../../config";
 
 const EndGameModal = ({ gameOver }) => {
   const [name, setName] = useState(null);
