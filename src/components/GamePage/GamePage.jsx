@@ -38,8 +38,8 @@ const GamePage = ({ characters, setCharacters }) => {
       ...markers,
       {
         name: marker.name,
-        x: marker.x,
-        y: marker.y,
+        x: marker.x + 8,
+        y: marker.y + 8,
       },
     ]);
   };

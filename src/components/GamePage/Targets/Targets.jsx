@@ -18,7 +18,7 @@ const Targets = ({ characters }) => {
 
   return (
     <>
-      <div className="targets"> Targets: {targetBoxes}</div>;
+      <div className="targets"> Targets: {targetBoxes}</div>
     </>
   );
 };
