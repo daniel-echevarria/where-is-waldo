@@ -15,9 +15,13 @@
   font-family: retro;
 }
 
+.intro h2 {
+  font-size: 32px;
+}
+
 .intro h2,
 p {
-  font-family: retro-2;
+  font-family: hey-comic;
 }
 
 @font-face {
@@ -28,4 +32,14 @@ p {
 @font-face {
   font-family: "retro-2";
   src: url("../../assets/Retro60Prime.ttf");
+}
+
+@font-face {
+  font-family: "hey-comic";
+  src: url("../../assets/hey_comic/hey-comic.ttf");
+}
+
+@font-face {
+  font-family: "badaboom";
+  src: url("../../assets/badaboom_bb/BADABB__.TTF");
 }

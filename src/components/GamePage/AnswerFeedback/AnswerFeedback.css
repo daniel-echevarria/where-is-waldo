@@ -3,6 +3,7 @@
   font-size: 20vh;
   position: fixed;
   width: 100%;
+  animation: fade-out 1s ease-in forwards;
 }
 
 .correct {
