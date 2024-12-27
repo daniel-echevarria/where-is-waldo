@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import wallyImg from "../../assets/wally.jpg";
 import CharacterSelection from "./CharacterSelection/CharacterSelection";
 import EndGameModal from "./EndGameModal/EndGameModal";
@@ -6,8 +6,11 @@ import AnswerFeedback from "./AnswerFeedback/AnswerFeedback";
 import MarkerList from "./MarkerList/MarkerList";
 import "./GamePage.css";
 import Targets from "./Targets/Targets";
+import { CharactersContext } from "../../App";
 
-const GamePage = ({ characters, setCharacters }) => {
+const GamePage = () => {
+  const characters = useContext(CharactersContext);
+
   const [showCharSelection, setShowCharSelection] = useState(false);
   const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
   const [relativeCoord, setRelativeCoord] = useState({ x: 0, y: 0 });
@@ -47,7 +50,7 @@ const GamePage = ({ characters, setCharacters }) => {
   return (
     <main>
       <AnswerFeedback answer={answer} />
-      <Targets characters={characters} />
+      <Targets />
       <CharacterSelection
         clickCoordinates={clickCoordinates}
         relativeCoord={relativeCoord}
@@ -56,8 +59,6 @@ const GamePage = ({ characters, setCharacters }) => {
         setAnswer={setAnswer}
         placeMarker={placeMarker}
         setGameOver={setGameOver}
-        characters={characters}
-        setCharacters={setCharacters}
       />
       <EndGameModal gameOver={gameOver} />
       <img onClick={handleClick} src={wallyImg} />

@@ -1,13 +1,16 @@
 import "./CharacterList.css";
-const CharacterList = ({ characters, handleCharacterSelection }) => {
-  const charList = characters.map((char) => {
+import { CharactersContext } from "../../../../App";
+import { useContext } from "react";
+const CharacterList = ({ handleCharacterSelection }) => {
+  const characters = useContext(CharactersContext);
+  const charList = characters.map((characterName) => {
     return (
       <button
-        key={char.name}
-        value={char.name}
+        key={characterName}
+        value={characterName}
         onClick={handleCharacterSelection}
       >
-        {char.name}
+        {characterName}
       </button>
     );
   });

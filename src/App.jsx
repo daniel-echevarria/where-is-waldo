@@ -4,29 +4,34 @@ import apiUrl from "./config";
 import IntroPage from "./components/IntroPage/IntroPage";
 import LoadingPage from "./components/LoadingPage/LoadingPage";
 import GamePage from "./components/GamePage/GamePage";
+import { createContext } from "react";
+
+export const CharactersContext = createContext(null);
 
 function App() {
   const [introOver, setIntroOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-  const [characters, setCharacters] = useState([]);
+  const [charactersNames, setCharactersNames] = useState([]);
 
   useEffect(() => {
-    const getCharacters = async () => {
+    const getCharactersNames = async () => {
       const response = await fetch(`${apiUrl}/personages`, {
         mode: "cors",
       });
-      const charactersObjects = await response.json();
-      setCharacters(charactersObjects);
+      const characterNames = await response.json();
+      setCharactersNames(characterNames);
       setGameStarted(true);
     };
-    getCharacters();
+    getCharactersNames();
   }, []);
 
   if (!introOver) {
     return <IntroPage setIntroOver={setIntroOver} />;
   }
   return gameStarted ? (
-    <GamePage setCharacters={setCharacters} characters={characters} />
+    <CharactersContext.Provider value={charactersNames}>
+      <GamePage />
+    </CharactersContext.Provider>
   ) : (
     <LoadingPage />
   );
