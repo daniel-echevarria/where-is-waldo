@@ -1,9 +1,6 @@
 import "./CharacterList.css";
-import { CharactersContext } from "../../../../App";
-import { useContext } from "react";
-const CharacterList = ({ handleCharacterSelection }) => {
-  const characters = useContext(CharactersContext);
-  const charList = characters.map((characterName) => {
+const CharacterList = ({ charactersLeftToFind, handleCharacterSelection }) => {
+  const charList = charactersLeftToFind.map((characterName) => {
     return (
       <button
         key={characterName}

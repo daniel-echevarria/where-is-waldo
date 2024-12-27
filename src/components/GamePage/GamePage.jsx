@@ -6,11 +6,8 @@ import AnswerFeedback from "./AnswerFeedback/AnswerFeedback";
 import MarkerList from "./MarkerList/MarkerList";
 import "./GamePage.css";
 import Targets from "./Targets/Targets";
-import { CharactersContext } from "../../App";
 
-const GamePage = () => {
-  const characters = useContext(CharactersContext);
-
+const GamePage = ({ characters, setCharacters }) => {
   const [showCharSelection, setShowCharSelection] = useState(false);
   const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
   const [relativeCoord, setRelativeCoord] = useState({ x: 0, y: 0 });
@@ -21,10 +18,11 @@ const GamePage = () => {
   const numCharacters = useRef(characters.length);
 
   useEffect(() => {
-    markers.length > 0 &&
-      markers.length === numCharacters.current &&
+    if (markers.length === 0) return;
+    if (markers.length === numCharacters.current) {
       setGameOver(true);
-  }, [setGameOver, markers.length, characters.length]);
+    }
+  }, [setGameOver, markers.length, numCharacters]);
 
   const handleClick = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -50,7 +48,7 @@ const GamePage = () => {
   return (
     <main>
       <AnswerFeedback answer={answer} />
-      <Targets />
+      <Targets characters={characters} />
       <CharacterSelection
         clickCoordinates={clickCoordinates}
         relativeCoord={relativeCoord}
@@ -59,6 +57,8 @@ const GamePage = () => {
         setAnswer={setAnswer}
         placeMarker={placeMarker}
         setGameOver={setGameOver}
+        characters={characters}
+        setCharacters={setCharacters}
       />
       <EndGameModal gameOver={gameOver} />
       <img onClick={handleClick} src={wallyImg} />

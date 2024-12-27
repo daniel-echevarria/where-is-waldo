@@ -1,7 +1,7 @@
 import "./CharacterSelection.css";
-import _ from "lodash";
 import TargetingCircle from "./TargetingCircle/TargetingCircle";
 import CharacterList from "./CharacterList/CharacterList";
+import apiUrl from "../../../config";
 
 const CharacterSelection = ({
   clickCoordinates,
@@ -19,31 +19,33 @@ const CharacterSelection = ({
   const yPos = clickCoordinates.y - circleRadius - 2;
   const display = showCharSelection ? "flex" : "none";
 
-  const isInTargetRange = (value, target, errorMargin) => {
-    const lowerRange = target - errorMargin;
-    const upperRange = target + errorMargin;
-    const range = _.range(lowerRange, upperRange);
-    return range.includes(value);
+  const compareCoordinates = async (characterName, selectedCoordinates) => {
+    const requestOptions = {
+      mode: "cors",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: characterName,
+        coordinates: selectedCoordinates,
+        circle_radius: circleRadius,
+      }),
+    };
+    const response = await fetch(`${apiUrl}/personage_check`, requestOptions);
+    const result = await response.json();
+    return result;
   };
 
-  const charIsInCircle = (relativeCoord, char) => {
-    return (
-      isInTargetRange(relativeCoord.x, char.x, circleRadius) &&
-      isInTargetRange(relativeCoord.y, char.y, circleRadius)
-    );
+  const handleFoundChar = (charName) => {
+    const filteredNames = characters.filter((char) => char != charName);
+    setCharacters(filteredNames);
+    placeMarker({ name: charName, x: xPos, y: yPos });
+    setAnswer("correct");
   };
 
-  const handleCharacterSelection = (e) => {
-    const selectedChar = characters.find(
-      (char) => char.name === e.target.value
-    );
-    if (charIsInCircle(relativeCoord, selectedChar)) {
-      setCharacters(characters.filter((char) => char !== selectedChar));
-      placeMarker({ name: e.target.value, x: xPos, y: yPos });
-      setAnswer("correct");
-    } else {
-      setAnswer("wrong");
-    }
+  const handleCharacterSelection = async (e) => {
+    const charName = e.target.value;
+    const foundChar = await compareCoordinates(charName, relativeCoord);
+    foundChar ? handleFoundChar(charName) : setAnswer("wrong");
     setShowCharSelection(false);
   };
 
@@ -54,7 +56,7 @@ const CharacterSelection = ({
     >
       <TargetingCircle circleDiameter={circleDiameter} />
       <CharacterList
-        characters={characters}
+        charactersLeftToFind={characters}
         handleCharacterSelection={handleCharacterSelection}
       />
     </div>
