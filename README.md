@@ -1,4 +1,4 @@
-# Where’s Waldo
+# Where’s Waldo - A Photo Tagging App
 
 ## Table of Contents
 
